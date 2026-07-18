@@ -1,39 +1,36 @@
-const order = {
-    id: "13",
-    status: "valid",
-    stock: 5,
-    amount: 50
-};
+function isSorted(arr) {
 
-console.log(order);
+    for (let i = 0; i < arr.length - 1; i++) {
 
-let totalRevenue = 0;
-let successfulOrder = 0;
-let skippedInRow = 0;
-let stockFailed = 0;
+        if (arr[i] > arr[i + 1]) {
+            return false;
+        }
 
-if (
-    order.status === "canceled" ||
-    order.status === "invalid" ||
-    order.stock === 0
-) {
-    console.log("Order not valid");
-
-    skippedInRow++;
-
-    if (order.stock === 0) {
-        stockFailed++;
     }
 
-} else {
-
-    totalRevenue += order.amount;
-    successfulOrder++;
-
-    skippedInRow = 0;
+    return true;
 }
 
-console.log("Total Revenue:", totalRevenue);
-console.log("Successful Orders:", successfulOrder);
-console.log("Skipped in a Row:", skippedInRow);
-console.log("Stock Failed:", stockFailed);
+const numbers = [1, 2, 3, 4, 5];
+
+console.log(isSorted(numbers));
+
+
+function greaterThan(arr, value) {
+
+    let result = [];
+
+    for (let i = 0; i < arr.length; i++) {
+
+        if (arr[i] > value) {
+            result.push(arr[i]);
+        }
+
+    }
+
+    return result;
+}
+
+const numbers = [10, 5, 20, 8, 30];
+
+console.log(greaterThan(numbers, 10));
