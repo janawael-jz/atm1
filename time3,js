@@ -1,0 +1,9 @@
+console.log("Step 1");
+
+setTimeout(function () {
+    console.log("Async Step");
+}, 500);
+
+console.log("Step 2");
+
+console.log("Step 3");
