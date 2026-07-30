@@ -1,7 +1,7 @@
 function  calculateShipping(weight){
     const shippingCost = weight * 5;
     
-    return new promise ((resolve ,reject)=>{
+    return new Promise ((resolve ,reject)=>{
         if(weight > 0){
             resolve(shippingCost);
         } else {
