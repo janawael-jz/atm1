@@ -1,0 +1,4 @@
+mongodn username :g3_ecu
+mangodb password :y97aDnjBDWXa!sD
+
+mongodb+srv://<g3_ecu>:<y97aDnjBDWXa!sD>@cluster0.vunsmyx.mongodb.net/?appName=Cluster0
