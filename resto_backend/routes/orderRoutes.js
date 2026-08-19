@@ -1,5 +1,4 @@
 const express = require("express");
-
 const router = express.Router();
 
 const {
@@ -8,10 +7,11 @@ const {
   getOrderById,
   payPerson,
 } = require("../controllers/orderController");
+const protect = require("../middleware/authMiddleware");
 
 router.post("/", createOrder);
 
-router.get("/", getOrders);
+router.get("/",protect, getOrders);
 
 router.get("/:id", getOrderById);
 

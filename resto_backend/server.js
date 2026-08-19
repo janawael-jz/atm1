@@ -9,11 +9,13 @@ const connectDB = require("./config/db");
 const menuItemRoutes = require("./routes/menuItemRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const authRoutes = require("./routes/authRoutes");
 const app = express();
 
 connectDB();
 
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 app.use("/api/payments", paymentRoutes);
 
 
