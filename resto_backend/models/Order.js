@@ -21,6 +21,37 @@ const orderSchema = new mongoose.Schema(
           required: true,
           min: 0,
         },
+
+        // Sauce
+        sauce: {
+          type: String,
+          enum: ["None", "Ketchup", "Mayo", "BBQ", "Ranch"],
+          default: "None",
+        },
+
+        saucePrice: {
+          type: Number,
+          default: 0,
+          min: 0,
+        },
+
+        // Extra Cheese
+        extraCheese: {
+          type: Boolean,
+          default: false,
+        },
+
+        extraCheesePrice: {
+          type: Number,
+          default: 0,
+          min: 0,
+        },
+
+        // Ingredients to remove
+        removedIngredients: {
+          type: [String],
+          default: [],
+        },
       },
     ],
 

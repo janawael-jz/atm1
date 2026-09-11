@@ -40,18 +40,75 @@ const createOrder = async (req, res) => {
       }
 
       const quantity = item.quantity || 1;
-      const itemTotal = menuItem.price * quantity;
+
+      // =========================
+      // SAUCE
+      // =========================
+
+      const sauce = item.sauce || "None";
+
+      let saucePrice = 0;
+
+      if (sauce !== "None") {
+        saucePrice = 15;
+      }
+
+      // =========================
+      // EXTRA CHEESE
+      // =========================
+
+      const extraCheese = item.extraCheese || false;
+
+      let extraCheesePrice = 0;
+
+      if (extraCheese) {
+        extraCheesePrice = 20;
+      }
+
+      // =========================
+      // REMOVED INGREDIENTS
+      // =========================
+
+      const removedIngredients = item.removedIngredients || [];
+
+      // =========================
+      // CALCULATE PRICE
+      // =========================
+
+      const singleItemPrice =
+        menuItem.price +
+        saucePrice +
+        extraCheesePrice;
+
+      const itemTotal = singleItemPrice * quantity;
+
+      // =========================
+      // SAVE ORDER ITEM
+      // =========================
 
       orderItems.push({
         menuItem: menuItem._id,
         quantity: quantity,
         price: menuItem.price,
+
+        sauce: sauce,
+        saucePrice: saucePrice,
+
+        extraCheese: extraCheese,
+        extraCheesePrice: extraCheesePrice,
+
+        removedIngredients: removedIngredients,
       });
 
       totalAmount += itemTotal;
     }
 
-    const amountPerPerson = totalAmount / numberOfPeople;
+    // =========================
+    // SPLIT BILL
+    // =========================
+
+    const amountPerPerson =
+      totalAmount / numberOfPeople;
 
     const splitBill = [];
 
@@ -62,6 +119,10 @@ const createOrder = async (req, res) => {
         status: "pending",
       });
     }
+
+    // =========================
+    // CREATE ORDER
+    // =========================
 
     const order = await Order.create({
       items: orderItems,
@@ -74,6 +135,7 @@ const createOrder = async (req, res) => {
       success: true,
       data: order,
     });
+
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -82,14 +144,21 @@ const createOrder = async (req, res) => {
   }
 };
 
+
+// =========================
+// GET ALL ORDERS
+// =========================
+
 const getOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("items.menuItem");
+    const orders = await Order.find()
+      .populate("items.menuItem");
 
     res.status(200).json({
       success: true,
       data: orders,
     });
+
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -97,6 +166,11 @@ const getOrders = async (req, res) => {
     });
   }
 };
+
+
+// =========================
+// GET ORDER BY ID
+// =========================
 
 const getOrderById = async (req, res) => {
   try {
@@ -114,6 +188,7 @@ const getOrderById = async (req, res) => {
       success: true,
       data: order,
     });
+
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -121,6 +196,11 @@ const getOrderById = async (req, res) => {
     });
   }
 };
+
+
+// =========================
+// PAY PERSON
+// =========================
 
 const payPerson = async (req, res) => {
   try {
@@ -135,9 +215,10 @@ const payPerson = async (req, res) => {
       });
     }
 
-    const personIndex = order.splitBill.findIndex(
-      (p) => p.person === Number(person)
-    );
+    const personIndex =
+      order.splitBill.findIndex(
+        (p) => p.person === Number(person)
+      );
 
     if (personIndex === -1) {
       return res.status(404).json({
@@ -146,7 +227,9 @@ const payPerson = async (req, res) => {
       });
     }
 
-    if (order.splitBill[personIndex].status === "paid") {
+    if (
+      order.splitBill[personIndex].status === "paid"
+    ) {
       return res.status(400).json({
         success: false,
         message: "This person already paid",
@@ -155,9 +238,10 @@ const payPerson = async (req, res) => {
 
     order.splitBill[personIndex].status = "paid";
 
-    const allPaid = order.splitBill.every(
-      (p) => p.status === "paid"
-    );
+    const allPaid =
+      order.splitBill.every(
+        (p) => p.status === "paid"
+      );
 
     if (allPaid) {
       order.status = "paid";
@@ -169,6 +253,7 @@ const payPerson = async (req, res) => {
       success: true,
       data: order,
     });
+
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -176,6 +261,7 @@ const payPerson = async (req, res) => {
     });
   }
 };
+
 
 module.exports = {
   createOrder,

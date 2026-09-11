@@ -1,0 +1,109 @@
+.restaurant {
+  min-height: 100vh;
+  background: #f8f5f0;
+  font-family: Arial, sans-serif;
+  padding-bottom: 40px;
+}
+
+header {
+  text-align: center;
+  background: #8b4513;
+  color: white;
+  padding: 40px 20px;
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-size: 40px;
+}
+
+header p {
+  margin: 0;
+  font-size: 18px;
+}
+
+main {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.menu-card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.menu-card h3 {
+  font-size: 22px;
+  margin-top: 0;
+}
+
+.menu-card p {
+  color: #666;
+  line-height: 1.5;
+}
+
+.menu-card strong {
+  display: block;
+  font-size: 20px;
+  margin: 15px 0;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #8b4513;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #6f350f;
+}
+
+@media (max-width: 700px) {
+  .menu {
+    grid-template-columns: 1fr;
+  }
+}
+.order {
+  max-width: 700px;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+}
+
+.order h3 {
+  text-align: right;
+  font-size: 22px;
+  margin-top: 20px;
+}

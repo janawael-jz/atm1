@@ -1,0 +1,438 @@
+
+.restaurant {
+  min-height: 100vh;
+  background: #6fa9e0e9;
+  color: #3b2920;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background: #2e1407;
+  color: #d5d227;
+  text-align: center;
+  padding: 35px 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 38px;
+  color: #e2d32e;
+}
+
+header p {
+  margin-top: 10px;
+  font-size: 17px;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 35px 20px;
+}
+
+h2 {
+  color: #3b2920;
+  margin-top: 30px;
+}
+
+/* ================= MENU ================= */
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.menu-card {
+  background: #fffaf3;
+  border: 1px solid #dbc8ad;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(59, 41, 32, 0.1);
+}
+
+.menu-card h3 {
+  color: #3b2920;
+  margin-top: 0;
+}
+
+.menu-card strong {
+  color: #b38332;
+  font-size: 18px;
+}
+
+/* ================= CATEGORIES ================= */
+
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.category-buttons button {
+  margin-top: 0;
+  background: #fffaf3;
+  color: #3b2920;
+  border: 1px solid #dbc8ad;
+}
+
+.category-buttons button:hover {
+  background: #d9b36c;
+  color: #3b2920;
+}
+
+.category-buttons button.active {
+  background: #3b2920;
+  color: white;
+}
+
+/* ================= BUTTONS ================= */
+
+button {
+  background: #3b2920;
+  color: white;
+  border: none;
+  padding: 11px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #b38332;
+}
+
+/* ================= NAME & PHONE INPUTS ================= */
+
+input[type="text"],
+input[type="tel"] {
+  background: #add8e6;
+  color: #3b2920;
+  border: 1px solid #7aaabd;
+  padding: 10px;
+  border-radius: 7px;
+  outline: none;
+}
+
+input[type="text"]::placeholder,
+input[type="tel"]::placeholder {
+  color: #3b2920;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus {
+  border-color: #3b2920;
+}
+
+/* ================= CUSTOMIZATION ================= */
+
+.customization-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(59, 41, 32, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.customization-box {
+  position: relative;
+  width: 90%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fffaf3;
+  padding: 30px;
+  border-radius: 18px;
+  border: 2px solid #d9b36c;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+.customization-box h2 {
+  margin-top: 0;
+  color: #3b2920;
+}
+
+.customization-price {
+  color: #777;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  background: #3b2920;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.close-button:hover {
+  background: #b38332;
+}
+
+.custom-section {
+  margin-top: 25px;
+  padding: 18px;
+  background: #f5efe6;
+  border-radius: 12px;
+  border: 1px solid #dbc8ad;
+}
+
+.custom-section h3 {
+  margin-top: 0;
+  color: #3b2920;
+}
+
+.custom-section label {
+  display: block;
+  padding: 10px;
+  margin: 5px 0;
+  background: #fffaf3;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.custom-section label:hover {
+  background: #f0e4d3;
+}
+
+.custom-section input {
+  margin-right: 10px;
+}
+
+.checkbox-option {
+  display: block;
+}
+
+.add-customized-button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #3b2920;
+}
+
+.add-customized-button:hover {
+  background: #b38332;
+}
+
+/* ================= ORDER ================= */
+
+.order {
+  background: #fffaf3;
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid #dbc8ad;
+  margin-top: 20px;
+}
+
+.order-item {
+  padding: 20px 0;
+  border-bottom: 1px solid #dbc8ad;
+  position: relative;
+}
+
+.order-item h3 {
+  margin: 0;
+}
+
+.custom-option {
+  color: #8a6428;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+/* ================= QUANTITY ================= */
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.quantity-controls button {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+}
+
+.quantity-controls span {
+  min-width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.remove-button {
+  background: #8b3a32;
+  margin-top: 10px;
+}
+
+.remove-button:hover {
+  background: #a94b41;
+}
+
+/* ================= NUMBER OF PEOPLE ================= */
+
+input[type="number"] {
+  padding: 10px;
+  margin-left: 10px;
+  border: 1px solid #bda98d;
+  border-radius: 7px;
+  width: 70px;
+}
+
+/* ================= SPLIT BILL ================= */
+
+.split-bill {
+  background: #fffaf3;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid #dbc8ad;
+}
+
+.person {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border-bottom: 1px solid #dbc8ad;
+}
+
+.person strong {
+  color: #4d8b57;
+}
+
+/* ================= PAYMENT SUCCESS ================= */
+
+.payment-success {
+  margin: 40px auto;
+  max-width: 600px;
+  padding: 30px;
+  text-align: center;
+  background: #edf7ee;
+  border: 2px solid #4d8b57;
+  border-radius: 15px;
+}
+
+.payment-success h2 {
+  color: #18902c;
+}
+
+/* ================= RECEIPT ================= */
+
+.receipt {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fffaf3;
+  border-radius: 15px;
+  border: 2px solid #dfdf1f;
+  box-shadow: 0 8px 25px rgba(59, 41, 32, 0.15);
+}
+
+.receipt-header {
+  text-align: center;
+}
+
+.receipt-header h2 {
+  color: #0e147e;
+}
+
+.receipt-header p {
+  color: #777;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #dbc8ad;
+}
+
+.receipt-item p {
+  color: #777;
+  margin: 5px 0;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.receipt-status {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  margin-top: 20px;
+  background: #edf7ee;
+  border-radius: 8px;
+}
+
+.receipt-status span {
+  color: #4d8b57;
+  font-weight: bold;
+}
+
+.thank-you {
+  text-align: center;
+  color: #777;
+  margin: 25px 0;
+}
+
+.finished-button {
+  width: 100%;
+  padding: 14px;
+  background: #3b2920;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.finished-button:hover {
+  background: #b38332;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+  main {
+    padding: 20px 15px;
+  }
+
+  header h1 {
+    font-size: 30px;
+  }
+
+  .customization-box {
+    padding: 20px;
+    width: 85%;
+  }
+
+  .person {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .category-buttons {
+    gap: 8px;
+  }
+
+  .category-buttons button {
+    padding: 9px 14px;
+  }
+}
+

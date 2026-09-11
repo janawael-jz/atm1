@@ -1,0 +1,613 @@
+
+<div class="restaurant">
+
+  <header>
+    <h1>🍽️ JOUKYZ Bites</h1>
+    <p>Welcome to JOUKYZ Bites! Choose your favorite meal.</p>
+  </header>
+
+  <main>
+
+    @if (!showReceipt) {
+
+      <!-- ================= MENU ================= -->
+
+      <h2>Menu</h2>
+
+      <p>Items: {{ menuItems.length }}</p>
+
+      <!-- ================= CATEGORY FILTER ================= -->
+
+      <div class="category-buttons">
+
+        @for (category of categories; track category) {
+
+          <button
+            [class.active]="selectedCategory === category"
+            (click)="filterByCategory(category)"
+          >
+            {{ category }}
+          </button>
+
+        }
+
+      </div>
+
+      <!-- ================= MENU ITEMS ================= -->
+
+      <div class="menu">
+
+        @for (item of getFilteredMenuItems(); track item._id) {
+
+          <div class="menu-card">
+
+            <h3>{{ item.name }}</h3>
+
+            <p>{{ item.description }}</p>
+
+            <strong>
+              {{ item.price }} EGP
+            </strong>
+
+            <br><br>
+
+            <button
+              (click)="addToOrder(item)"
+            >
+              Add to Order
+            </button>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- ================= CUSTOMIZATION ================= -->
+
+      @if (showCustomization && selectedItem) {
+
+        <div class="customization-overlay">
+
+          <div class="customization-box">
+
+            <button
+              class="close-button"
+              (click)="closeCustomization()"
+            >
+              ✕
+            </button>
+
+            <h2>
+              Customize Your {{ selectedItem.name }}
+            </h2>
+
+            <p class="customization-price">
+              Base Price:
+              <strong>{{ selectedItem.price }} EGP</strong>
+            </p>
+
+            <!-- SAUCE -->
+
+            <div class="custom-section">
+
+              <h3>🥫 Choose Your Sauce</h3>
+
+              <label>
+                <input
+                  type="radio"
+                  name="sauce"
+                  value="None"
+                  [(ngModel)]="selectedSauce"
+                >
+                No Sauce
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="sauce"
+                  value="Ketchup"
+                  [(ngModel)]="selectedSauce"
+                >
+                Ketchup (+15 EGP)
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="sauce"
+                  value="Mayo"
+                  [(ngModel)]="selectedSauce"
+                >
+                Mayo (+15 EGP)
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="sauce"
+                  value="BBQ"
+                  [(ngModel)]="selectedSauce"
+                >
+                BBQ (+15 EGP)
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="sauce"
+                  value="Ranch"
+                  [(ngModel)]="selectedSauce"
+                >
+                Ranch (+15 EGP)
+              </label>
+
+            </div>
+
+
+            <!-- EXTRA CHEESE -->
+
+            <div class="custom-section">
+
+              <h3>🧀 Extras</h3>
+
+              <label class="checkbox-option">
+
+                <input
+                  type="checkbox"
+                  [(ngModel)]="extraCheese"
+                >
+
+                Extra Cheese (+20 EGP)
+
+              </label>
+
+            </div>
+
+
+            <!-- REMOVE INGREDIENTS -->
+
+            <div class="custom-section">
+
+              <h3>🚫 Remove Ingredients</h3>
+
+              <label class="checkbox-option">
+
+                <input
+                  type="checkbox"
+                  [(ngModel)]="noTomato"
+                >
+
+                No Tomato
+
+              </label>
+
+              <label class="checkbox-option">
+
+                <input
+                  type="checkbox"
+                  [(ngModel)]="noOnion"
+                >
+
+                No Onion
+
+              </label>
+
+              <label class="checkbox-option">
+
+                <input
+                  type="checkbox"
+                  [(ngModel)]="noPickles"
+                >
+
+                No Pickles
+
+              </label>
+
+            </div>
+
+
+            <!-- ADD CUSTOMIZED BUTTON -->
+
+            <button
+              class="add-customized-button"
+              (click)="addCustomizedItem()"
+            >
+              Add to Order
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- ================= ORDER ================= -->
+
+      <h2>Your Order</h2>
+
+      <div class="order">
+
+        @if (orderItems.length > 0) {
+
+          @for (item of orderItems; track $index) {
+
+            <div class="order-item">
+
+              <div class="order-item-info">
+
+                <h3>{{ item.name }}</h3>
+
+                <p>
+                  Base Price:
+                  {{ item.price }} EGP
+                </p>
+
+                @if (item.sauce !== 'None') {
+
+                  <p class="custom-option">
+                    🥫 Sauce:
+                    {{ item.sauce }}
+                    (+{{ item.saucePrice }} EGP)
+                  </p>
+
+                } @else {
+
+                  <p class="custom-option">
+                    🥫 No Sauce
+                  </p>
+
+                }
+
+
+                @if (item.extraCheese) {
+
+                  <p class="custom-option">
+                    🧀 Extra Cheese
+                    (+{{ item.extraCheesePrice }} EGP)
+                  </p>
+
+                }
+
+
+                @if (item.removedIngredients.length > 0) {
+
+                  <p class="custom-option">
+                    🚫 No
+                    {{ item.removedIngredients.join(', ') }}
+                  </p>
+
+                }
+
+
+                <p>
+                  Quantity:
+                  {{ item.quantity }}
+                </p>
+
+                <p>
+                  Item Price:
+                  {{ getItemPrice(item) }} EGP
+                </p>
+
+                <strong>
+                  Subtotal:
+                  {{ getItemTotal(item) }}
+                  EGP
+                </strong>
+
+              </div>
+
+
+              <!-- QUANTITY -->
+
+              <div class="quantity-controls">
+
+                <button
+                  (click)="decreaseQuantity($index)"
+                >
+                  −
+                </button>
+
+                <span>
+                  {{ item.quantity }}
+                </span>
+
+                <button
+                  (click)="increaseQuantity($index)"
+                >
+                  +
+                </button>
+
+              </div>
+
+
+              <!-- REMOVE -->
+
+              <button
+                class="remove-button"
+                (click)="removeFromOrder($index)"
+              >
+                Remove
+              </button>
+
+            </div>
+
+          }
+
+
+          <hr>
+
+
+          <!-- TOTAL -->
+
+          <h3>
+            Total:
+            {{ getTotal() }}
+            EGP
+          </h3>
+
+
+          <!-- NUMBER OF PEOPLE -->
+
+          <label for="people">
+            Number of People:
+          </label>
+
+          <input
+            id="people"
+            type="number"
+            min="1"
+                        [(ngModel)]="numberOfPeople"
+          >
+
+          <p>
+            Each person pays:
+            {{ getAmountPerPerson() }}
+            EGP
+          </p>
+
+
+          <button
+            (click)="createOrder()"
+          >
+            Create Order
+          </button>
+
+
+        } @else {
+
+          <p>No items added yet.</p>
+
+        }
+
+      </div>
+
+
+      <!-- ================= SPLIT BILL ================= -->
+
+      @if (splitBill.length > 0) {
+
+        <h2>Split Bill</h2>
+
+        <div class="split-bill">
+
+          @for (person of splitBill; track $index) {
+
+            <div class="person">
+
+              <span>
+                Person {{ person.person }}
+              </span>
+
+              <span>
+                {{ person.amount }} EGP
+              </span>
+
+              <span>
+                {{ person.status }}
+              </span>
+
+
+              @if (person.status !== 'paid') {
+
+                <button
+                  (click)="payPerson(person)"
+                >
+                  Pay with Visa
+                </button>
+
+              } @else {
+
+                <strong>
+                  PAID ✓
+                </strong>
+
+              }
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+    }
+
+
+    <!-- ================= PAYMENT SUCCESS ================= -->
+
+    @if (paymentSuccessful) {
+
+      <div class="payment-success">
+
+        <h2>✅ Payment Successful!</h2>
+
+        <p>
+          All payments have been completed successfully.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- ================= RECEIPT ================= -->
+
+    @if (showReceipt) {
+
+      <div class="receipt">
+
+        <div class="receipt-header">
+
+          <h2>🍽️ JOUKYZ Bites</h2>
+
+          <p>
+            Thank you for your order!
+          </p>
+
+        </div>
+
+
+        <hr>
+
+
+        <h3>Order Details</h3>
+
+
+        @for (item of orderItems; track $index) {
+
+          <div class="receipt-item">
+
+            <div>
+
+              <strong>
+                {{ item.name }}
+              </strong>
+
+              <p>
+                Quantity:
+                {{ item.quantity }}
+              </p>
+
+
+              @if (item.sauce !== 'None') {
+
+                <p>
+                  🥫 {{ item.sauce }} Sauce
+                </p>
+
+              }
+
+
+              @if (item.extraCheese) {
+
+                <p>
+                  🧀 Extra Cheese
+                </p>
+
+              }
+
+
+              @if (item.removedIngredients.length > 0) {
+
+                <p>
+                  🚫 No
+                  {{ item.removedIngredients.join(', ') }}
+                </p>
+
+              }
+
+            </div>
+
+
+            <div>
+
+              {{ getItemTotal(item) }}
+              EGP
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <hr>
+
+
+        <div class="receipt-row">
+
+          <span>Total</span>
+
+          <strong>
+            {{ getTotal() }}
+            EGP
+          </strong>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+          <span>Number of People</span>
+
+          <span>
+            {{ numberOfPeople }}
+          </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+          <span>Each Person</span>
+
+          <span>
+            {{ getAmountPerPerson() }}
+            EGP
+          </span>
+
+        </div>
+
+
+        <div class="receipt-status">
+
+          <strong>
+            PAYMENT STATUS
+          </strong>
+
+          <span>
+            PAID ✓
+          </span>
+
+        </div>
+
+
+        <hr>
+
+
+        <p class="thank-you">
+          Thank you for dining with us ❤️
+        </p>
+
+
+        <button
+          class="finished-button"
+          (click)="finishOrder()"
+        >
+          FINISHED
+        </button>
+
+      </div>
+
+    }
+
+  </main>
+
+</div>
+

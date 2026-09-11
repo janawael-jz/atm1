@@ -1,0 +1,54 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <h1>🍽️ Our Restaurant</h1>
+
+    <h2>Customer Sign In</h2>
+
+    <p>Enter your details to continue</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <label for="name">Name</label>
+
+      <input
+        id="name"
+        type="text"
+        placeholder="Enter your name"
+        formControlName="name"
+      >
+
+      @if (loginForm.get('name')?.invalid && loginForm.get('name')?.touched) {
+        <p class="error-message">
+          Name is required
+        </p>
+      }
+
+      <label for="phone">Phone Number</label>
+
+      <input
+        id="phone"
+        type="tel"
+        placeholder="Enter your phone number"
+        formControlName="phone"
+      >
+
+      @if (loginForm.get('phone')?.invalid && loginForm.get('phone')?.touched) {
+        <p class="error-message">
+          Phone number must be 11 digits
+        </p>
+      }
+
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+      >
+        Sign In
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
